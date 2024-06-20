@@ -7,8 +7,8 @@ describe("ruta test", () => {
     cy.visit("http://45.33.16.36:9051/home/clients/groups");
     cy.contains("button", "Crear").click();
 
-    const nombreRegional = "REGIONAL JUNIO";
-    const numeroRegional = "989898";
+    const nombreRegional = "REGIONAL SL";
+    const numeroRegional = "1234567";
     const compañia = "BANCOOMEVA";
     const estado = "ACTIVO";
 
@@ -42,13 +42,13 @@ describe("ruta test", () => {
     cy.contains("button", "Crear").click();
 
     const compañia = "BANCOOMEVA";
-    const nombrePunto = "EDIFICIO JUNIO";
-    const nombreCompleto = "EDIFICIO JUNIO";
+    const nombrePunto = "EDIFICIO CYPRESS";
+    const nombreCompleto = "EDIFICIO CYPRESS";
     const departamento = "CUNDINAMARCA";
     const ciudad = "MADRID";
     const tipoPunto = "OFICINA";
     const estadoPunto = "Activar";
-    const grupo = "REGIONAL JUNIO";
+    const grupo = "REGIONAL SL";
 
     cy.get(".ant-col-8")
       .eq(1)
@@ -145,14 +145,14 @@ describe("ruta test", () => {
     cy.visit("http://45.33.16.36:9051/home/clients/accounts");
 
     const compañia = "BANCOOMEVA";
-    const numeroCuenta = "988989";
-    const grupo = "REGIONAL JUNIO";
+    const numeroCuenta = "1234567";
+    const grupo = "REGIONAL SL";
     const prestador = "EAAB";
     const fecha = "Feb";
     const frecuencia = "MENSUAL";
     const subidaFactura = "EL CLIENTE SUBE LA FACTURA";
     const tipoServicio = "AGUA";
-    const numeroMedidor = "989898987";
+    const numeroMedidor = "122333444";
 
     cy.get('button[type="button"].ant-btn.ant-btn-primary.ant-btn-sm')
       .contains("Crear")
@@ -298,7 +298,7 @@ describe("ruta test", () => {
     };
 
     testInput(
-      "REGIONAL JUNIO",
+      "REGIONAL SL",
       'input[id="search_bar"][placeholder="Buscar"]'
     );
     testSelect("BANCOOMEVA", 0);
@@ -312,16 +312,15 @@ describe("ruta test", () => {
       .contains("span", "upload_file")
       .first()
       .click();
-
-    cy.get("input#image_bill").attachFile("factura.pdf");
-    cy.wait(3000);
-    cy.get("textarea#observation").type("Cargando factura desde Cypress");
-
+      cy.get("input#image_bill").attachFile("factura.pdf");
+      cy.get("textarea#observation").type("Cargando factura desde Cypress");
+      cy.wait(8000)
+  
     cy.get("button.ant-btn.ant-btn-round.ant-btn-primary.ant-btn-sm")
-      .eq(1)
-      .find('span')  
+      .eq(2)
+      .contains('span', 'Cargar factura')
       .click();
-      cy.wait(5000);
+      cy.wait(4000)
 
     // Esperar la solicitud y verificar la respuesta
     cy.wait("@graphqlRequest").then((interception) => {
@@ -346,12 +345,12 @@ describe("ruta test", () => {
     cy.visit("http://45.33.16.36:9051/home/load");
 
     cy.get('input[id="search_bar"][placeholder="Buscar"]').type(
-      "REGIONAL JUNIO"
+      "REGIONAL SL"
     );
     cy.get(
       ".ant-btn.ant-btn-primary.ant-btn-sm.ant-input-search-button"
     ).click();
-    cy.get("div.ant-typography").should("contain.text", "REGIONAL JUNIO");
+    cy.get("div.ant-typography").should("contain.text", "REGIONAL SL");
 
     cy.get("div.ant-select-selection-overflow").eq(0).type("BANCOOMEVA");
     cy.get("div.ant-select-item-option-content").contains("BANCOOMEVA").click();
@@ -375,7 +374,7 @@ describe("ruta test", () => {
     cy.get(".ant-col-8")
       .eq(0)
       .within(() => {
-        cy.get(".ant-input-group-wrapper").first().type("REGIONAL JUNIO");
+        cy.get(".ant-input-group-wrapper").first().type("REGIONAL SL");
       });
 
     cy.get(".ant-checkbox-input").check();
@@ -393,7 +392,7 @@ describe("ruta test", () => {
     cy.get(".ant-col-8")
       .eq(0)
       .within(() => {
-        cy.get(".ant-input-group-wrapper").first().type("REGIONAL JUNIO");
+        cy.get(".ant-input-group-wrapper").first().type("REGIONAL SL");
       });
     cy.get(".ant-checkbox-input").check();
     cy.get("button.ant-btn.ant-btn-primary.ant-btn-sm.ant-btn-dangerous")
@@ -404,11 +403,12 @@ describe("ruta test", () => {
       .click();
 
     //Eliminar regional
+    
     cy.visit("http://45.33.16.36:9051/home/clients/groups");
     cy.get(".ant-col-10")
       .eq(0)
       .within(() => {
-        cy.get(".ant-input-group-wrapper").first().type("REGIONAL JUNIO");
+        cy.get(".ant-input-group-wrapper").first().type("REGIONAL SL");
       });
     cy.get(".ant-checkbox-input").check();
     cy.get("button.ant-btn.ant-btn-primary.ant-btn-sm.ant-btn-dangerous")
@@ -417,6 +417,6 @@ describe("ruta test", () => {
     cy.get("button.swal-button.swal-button--confirm.swal-button--danger")
       .contains("Borrar")
       .click();
+      
   });
-
 });
